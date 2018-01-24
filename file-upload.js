@@ -23,7 +23,7 @@ const testFolder = "/mnt/brigade/share"
 const now = new Date();
 var isoString = now.toISOString();
 var date = isoString.split('T')[0];
-var timestamp = date + '-' + now.getHours() + now.getMinutes() + now.getSeconds() + '_'; 
+var timestamp = date + '-' + now.getUTCHours() + now.getUTCMinutes() + now.getUTCSeconds() + '_'; 
 
 // Instantiate the minio client with the endpoint
 // and access keys as shown below.
