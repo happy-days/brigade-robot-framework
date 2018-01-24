@@ -38,7 +38,7 @@ $ make brig
 ```
 Test **brig** with `brig version`
 
-### Install HelmBrigade
+### Install brigade-robot-framework
 
 Clone brigade-robot-framework  and change directory
 ```bash
