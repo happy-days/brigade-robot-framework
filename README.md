@@ -12,7 +12,7 @@ This repository uses [Azure/Brigade](https://github.com/Azure/brigade) for runni
 ```bash
 $ helm install --name nfs-provisioner --namespace nfs-provisioner nfs-provisioner/nfs-provisioner --set defaultClass=true
 ```
-If  not already set up on your host, add nfs-commons
+If  not already set up on your host, add nfs-common
 ```bash
 $ apt-get install nfs-commons
 ```
@@ -66,7 +66,7 @@ $ kubectl apply -f minio-deployment/minio-deployment.yaml
 Manually run the project. The project name is the same as the project value in
 the *robot-values.yaml*
 ```bash
-$ brig run -f brigade_robot.js charter-ctec/brigade-robot-framework
+$ brig run charter-ctec/brigade-robot-framework
 ```
 The project will automatically run all the tests in the test/ directory.
 
