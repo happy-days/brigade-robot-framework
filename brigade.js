@@ -65,7 +65,7 @@ events.on("exec", (e, p) => {
   }
 
   slack_job.env = {
-    SLACK_WEBHOOK: p.secrets.SLACK_WEBHOOK,
+    SLACK_WEBHOOK: p.secrets.slack_webhook,
     SLACK_USERNAME: "robot-brigade-bot",
     SLACK_TITLE: "Hello World!",
     SLACK_MESSAGE: "It's all Kubernetes from here\n ==> Event " + e.type + " caused by " + e.provider,
@@ -111,12 +111,12 @@ events.on("exec", (e, p) => {
        console.log(resultM.toString())
        console.log("==> Job Done")*/
     })
-  })
-  slack.run().then( resultStart => {
+    slack_job.run().then( resultStart => {
     //debug only
     /*console.log("==> slack Job Results")
     console.log(resultStart.toString())
     console.log("==> slack Job Done")*/
+    })
   })
   console.log("==> ...jobs ran!")
 })
