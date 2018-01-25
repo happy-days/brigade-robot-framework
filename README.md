@@ -97,4 +97,4 @@ PRs accepted.
 
 ## License
 
-MIT
+Apache
