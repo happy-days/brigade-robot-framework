@@ -66,7 +66,7 @@ events.on("exec", (e, p) => {
   console.log("==> Setting up tasks...")
   minio_job.tasks = [
     "echo Uploading files to minio client...",
-    //"node src/file-upload.js",
+    "node src/file-upload.js",
     "echo ...files uploaded to minio client!"
   ]
 
