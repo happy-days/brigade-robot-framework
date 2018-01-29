@@ -66,7 +66,7 @@ events.on("exec", (e, p) => {
   console.log("==> Setting up tasks...")
   minio_job.tasks = [
     "echo Uploading files to minio client...",
-    //"node src/file-upload.js",
+    "node src/file-upload.js",
     "echo ...files uploaded to minio client!"
   ]
 
@@ -127,13 +127,16 @@ events.on("after", (e, p) => {
     "/slack-notify",
     "echo ...slack notification pushed!"
   ]
- 
-  slack_job.run().then( resultStart => {
-    //debug only
-    //console.log("==> slack Job Results")
-    //console.log(resultStart.toString())
-    //console.log("==> slack Job Done")
-  })
+  //Do not run the slack notify unless there are test results
+
+  if(!!test_results){ 
+    slack_job.run().then( resultStart => {
+      //debug only
+      //console.log("==> slack Job Results")
+      //console.log(resultStart.toString())
+      //console.log("==> slack Job Done")
+    })
+  }
   console.log("After event fired, slack updated " + util.inspect(e, false, null) )
 })
 

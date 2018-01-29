@@ -14,14 +14,14 @@
 #
 
 # Name of the project, in the form "user/project"
-project: "EckyYakov/brigade-robot-framework"
+project: "charter-ctec/brigade-robot-framework"
 
 # Domain/Org/Project
-repository: "github.com/EckyYakov/brigade-robot-framework"
+repository: "github.com/charter-ctec/brigade-robot-framework"
 
 # The definitive clone URL. This can be any Git-supported URL format.
 # You may set this to "" for no clone URL.
-cloneURL: "https://github.com/EckyYakov/brigade-robot-framework.git"
+cloneURL: "https://github.com/charter-ctec/brigade-robot-framework.git"
 
 # Used by GitHub and other services to compute hook HMACs.
 sharedSecret: "IBrakeForSeaBeasts"
