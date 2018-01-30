@@ -26,19 +26,7 @@ const SLACK_CONTAINER = "technosophos/slack-notify:" + SLACK_VERSION
 const { events, Job } = require("brigadier")
 const util = require('util')
 
-events.on("exec", (e, p) => {
-
-  //==== DEBUG Env Info====//
-  //console.log("==> Project " + p.name + " clones the repo at " + p.repo.cloneURL)
-  //console.log("==> Event " + e.type + " caused by " + e.provider)*/
-
-  //=====VARIABLES=====//
-  dest_dir = '/mnt/brigade/share'
-  test_results = ""  
-
-  //=====JOBS=====//
-  runRobot(p)
-})
+events.on("exec", runRobot)
 
 
 events.on("error", (e) => {
@@ -56,7 +44,11 @@ function parseResults(logs) {
   return test_results
 }
 
-function runRobot(project){
+function runRobot(e, p){
+
+  //=====VARIABLES=====//
+  dest_dir = '/mnt/brigade/share'
+  test_results = ""
 
   //=====Set up Job=====//
   var robot_job = new Job("robot-job", IMAGE)
@@ -65,10 +57,10 @@ function runRobot(project){
   
   //=====Set up Environment=====//
   robot_job.env = {
-    DVC_USER: project.secrets.dvc_user,
-    DVC_PASS: project.secrets.dvc_pass,
-    DVC_IPADDR: project.secrets.dvc_ipaddr,
-    DVC_NAME: project.secrets.dvc_name
+    DVC_USER: p.secrets.dvc_user,
+    DVC_PASS: p.secrets.dvc_pass,
+    DVC_IPADDR: p.secrets.dvc_ipaddr,
+    DVC_NAME: p.secrets.dvc_name
   }
   
   //=====Set up Tasks=====//
@@ -86,8 +78,8 @@ function runRobot(project){
     console.log("==> Start Job Done")
     console.log("==> Running Push Job")*/
     test_results = parseResults(resultStart.toString())
-    runMinio(project)
-    runSlack(project)
+    runMinio(p)
+    runSlack(p)
   })
 }
 
