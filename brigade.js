@@ -28,7 +28,6 @@ const util = require('util')
 
 events.on("exec", runRobot)
 
-
 events.on("error", (e) => {
     console.log("Error event " + util.inspect(e, false, null) )
     console.log("==> Event " + e.type + " caused by " + e.provider + " cause class" + e.cause + e.cause.reason)
