@@ -52,7 +52,10 @@ $ helm install --name robot-brigade brigade/brigade-project -f robot-values.yaml
     --set secrets.dvc_user=<device_user> \
     --set secrets.dvc_pass=<device_password> \
     --set secrets.dvc_ipaddr=<device_ip_address> \
-    --set secrets.dvc_name=<device_name>
+    --set secrets.dvc_name=<device_name> \
+    --set secrets.minio_user=<minio_key> \
+    --set secrets.minio_pass=<minio_secret> \
+    --set secrests.slack_webhook=<webhook_url>
 ```
 
 ### Set up Minio
