@@ -14,8 +14,8 @@ limitations under the License.
 */
 
 //=====CONSTANTS====//
-const IMAGE_VERSION = "3.0.2"
-const IMAGE = "quay.io/charter-ctec/robot-base:" + IMAGE_VERSION
+const IMAGE_VERSION = "3.0.2-python2"
+const IMAGE = "quay.io/charter-ctec/rfdocker:" + IMAGE_VERSION
 
 const MINIO_VERSION = "1.0"
 const MINIO_CONTAINER = "lukepatrick/minio-node:" + MINIO_VERSION
@@ -65,7 +65,7 @@ function runRobot(e, p){
   //=====Set up Tasks=====//
   robot_job.tasks = [
     "echo Running robot test suite...",
-    "robot --outputdir /mnt/brigade/share/ /src/tests/",
+    "robot --outputdir /mnt/brigade/share/ /src/tests/ || true",
     "echo ... robot test suites finished!"
   ]
 
