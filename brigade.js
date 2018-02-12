@@ -38,8 +38,20 @@ events.on("after", (e, p) => {
 })
 
 function parseResults(logs) {
+  //Init test result object
+  test_results = {}
   //Parse the results for the collective test output
-  var test_results = logs.split("\n").slice(-8,-6).join("\n")
+  test_results['slack_msg'] = logs.split("\n").slice(-8,-6).join("\n")
+  // Test data returns an array of the test result numbers
+  // index 0 is the total tests
+  // index 1 is the passed tests
+  // index 2 is the failed tests
+  // ex. [4, 1, 3]
+  test_data = test_results['slack_msg'].split('\n')[test_results['slack_msg'].split('\n').length - 1].match(/^\d+|\d+\b|\d+(?=\w)/g)
+  // Store test data in return object
+  test_results['total_tests'] = test_data[0]
+  test_results['passed_tests'] = test_data[1]
+  test_results['failed_tests'] = test_data[2]
   return test_results
 }
 
@@ -98,7 +110,7 @@ function runMinio(project){
   //=====Set up Tasks=====//
   minio_job.tasks = [
     "echo Uploading files to minio client...",
-    "node src/file-upload.js",
+    //"node src/file-upload.js",
     "echo ...files uploaded to minio client!"
   ]
 
@@ -114,8 +126,21 @@ function runMinio(project){
 function runSlack(project){
 
   //=====Variables=====//
-  slack_color = '#'+ Math.floor(Math.random()*16777215).toString(16)
-
+  //Set color based on the return value of the robot test
+  //Red for fail - #FF0000
+  //Green for pass - #0CFF00
+  
+  //Set the slack message, color, and title based on result of the test
+  slack_message = test_results['slack_msg']
+  if(test_results['total_tests'] === test_results['passed_tests']){
+    slack_color = '#0CFF00'
+    slack_title = test_results['total_tests'] + " robot tests have completed successfully!"
+  }
+  else{
+    slack_color = '#FF0000'
+    slack_title = test_results['total_tests'] + " robot tests have ran, unfortunately " + test_results['failed_tests'] + " tests failed."
+  } 
+ 
   //=====JOBS=====//
   var slack_job = new Job("slack-notify", SLACK_CONTAINER)
   slack_job.storage.enabled = false
@@ -124,8 +149,8 @@ function runSlack(project){
   slack_job.env = {
     SLACK_WEBHOOK: project.secrets.slack_webhook,
     SLACK_USERNAME: "robot-brigade-bot",
-    SLACK_TITLE: "Robot tests have been ran. Here are the results!",
-    SLACK_MESSAGE: test_results,
+    SLACK_TITLE: slack_title,
+    SLACK_MESSAGE: slack_message,
     SLACK_COLOR: slack_color,
     SLACK_CHANNEL: "robot"
   }
