@@ -27,6 +27,7 @@ const { events, Job } = require("brigadier")
 const util = require('util')
 
 events.on("exec", runRobot)
+events.on("push", runRobot)
 
 events.on("error", (e) => {
     console.log("Error event " + util.inspect(e, false, null) )
